@@ -7,15 +7,73 @@
   --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+  margin: 20px;
+}
+
+.game {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.game-board {
+  width: 256px;
+  height: 256px;
+}
+
+.game-info {
+  margin-top: 20px;
+}
+
+.status {
+  margin-bottom: 10px;
+  font-size: medium;
+}
+
+.square {
+  background: black;
+  height: 33px;
+  width: 33px;
+  position: absolute;
+}
+
+.square-cell {
+  position: relative;
+  height: 31px;
+  width: 31px;
+  background: #068c04;
+  top: 1px;
+  left: 1px;
+}
+
+.square-empty {
+  position: relative;
+}
+
+.square-black {
+  position: relative;
+  height: 31px;
+  width: 31px;
+  background: black;
+  border-radius: 50%;
+}
+
+.square-white {
+  position: relative;
+  height: 31px;
+  width: 31px;
+  background: white;
+  border-radius: 50%;
+}
+
+.square-puttable {
+  position: relative;
+  height: 31px;
+  width: 31px;
+  background: yellow;
+  opacity: 0.3;
 }
