@@ -1,7 +1,6 @@
 "use client";
 
 import { initSquares } from "@/const/const";
-import next from "next";
 import { createContext, useCallback, useState } from "react";
 
 export type GameInfo = {
@@ -146,7 +145,7 @@ export const useGame = (): GameInfo => {
         }
       }
     },
-    [squares, validate]
+    [validate]
   );
 
   /**
@@ -200,16 +199,7 @@ export const useGame = (): GameInfo => {
       });
       return ret;
     },
-    []
-  );
-
-  const handleComputer = useCallback(
-    (nextTurn: number, nextSquares: number[][]) => {
-      const flipableCells = calculatePuttable(nextTurn, nextSquares);
-      const nextPut = flipableCells[0];
-      selectCell(nextPut.x, nextPut.y, nextTurn, nextSquares);
-    },
-    []
+    [validate, findFlipableCells]
   );
 
   /**
@@ -246,7 +236,24 @@ export const useGame = (): GameInfo => {
         return () => clearTimeout(timeout);
       }
     },
-    [changeTurn, flip, highlightPuttableCells, judgeWinner, validate]
+    [
+      changeTurn,
+      flip,
+      highlightPuttableCells,
+      judgeWinner,
+      squares,
+      turn,
+      validate,
+    ]
+  );
+
+  const handleComputer = useCallback(
+    (nextTurn: number, nextSquares: number[][]) => {
+      const flipableCells = calculatePuttable(nextTurn, nextSquares);
+      const nextPut = flipableCells[0];
+      selectCell(nextPut.x, nextPut.y, nextTurn, nextSquares);
+    },
+    [calculatePuttable, selectCell]
   );
 
   return {
