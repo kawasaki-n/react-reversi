@@ -1,34 +1,19 @@
-import { FC } from "react";
+import { FC, use } from "react";
 import Square from "./Square";
-import { CellType } from "./types";
+import { AppContext } from "@/contexts/AppContext";
 
-type Props = {
-  squares: number[][];
-  cellTypes: CellType[];
-  onClick: (x: number, y: number) => void;
-};
+const Board: FC = () => {
+  const { squares } = use(AppContext);
 
-const Board: FC<Props> = (props) => {
-  const renderSquare = (x: number, y: number, value: number) => {
-    return (
-      <Square
-        key={x + "," + y}
-        top={y * 32}
-        left={x * 32}
-        value={value}
-        onClick={() => props.onClick(x, y)}
-        cellTypes={props.cellTypes}
-      />
-    );
-  };
-
-  const boardDom = [];
-  for (let y = 0; y < props.squares.length; y++) {
-    for (let x = 0; x < props.squares.length; x++) {
-      boardDom.push(renderSquare(x, y, props.squares[y][x]));
-    }
-  }
-  return <div>{boardDom}</div>;
+  return (
+    <>
+      {squares.map((row, y) => {
+        return row.map((cell, x) => {
+          return <Square key={y + "," + x} x={x} y={y} value={cell} />;
+        });
+      })}
+    </>
+  );
 };
 
 export default Board;
